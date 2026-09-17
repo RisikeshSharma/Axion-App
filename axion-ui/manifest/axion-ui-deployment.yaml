@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: axion-ui-deployment
+  namespace: axion
+  labels:
+    app: axion-ui
+
+spec:
+  replicas: 2
+
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+
+  selector:
+    matchLabels:
+      app: axion-ui
+
+  template:
+    metadata:
+      labels:
+        app: axion-ui
+
+    spec:
+      containers:
+        - name: axion-ui
+          image: rishidevacr2026.azurecr.io/axionui:v3
+          imagePullPolicy: Always
+
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+
+          

@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+
+metadata:
+  name: axion-ingress
+  namespace: axion
+
+spec:
+  ingressClassName: azure-application-gateway
+
+  rules:
+    - host: backend.rishikesharma.online
+      http:
+        paths:
+          # Backend
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: telemetry-query-service
+                port:
+                  number: 8000

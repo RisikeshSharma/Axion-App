@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: ingestion-deployment
+  namespace: axion
+  labels:
+    app: ingestion
+
+spec:
+  replicas: 2
+
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+
+  selector:
+    matchLabels:
+      app: ingestion
+
+  template:
+    metadata:
+      labels:
+        app: ingestion
+
+    spec:
+      containers:
+        - name: ingestion
+          image: rishidevacr2026.azurecr.io/ingestion:v1
+          imagePullPolicy: Always
+
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+
